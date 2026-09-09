@@ -14,26 +14,18 @@ import bcrypt from "bcryptjs";
 export default function CreatePage() {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
 
   const createRoom = async () => {
-    if (
-      !name ||
-      !room ||
-      !password
-    ) {
-      alert(
-        "すべて入力してください"
-      );
+    if (!name || !room || !password) {
+      alert("すべて入力してください");
       return;
     }
 
-    const passwordHash =
-      await bcrypt.hash(
-        password,
-        10
-      );
+    const passwordHash = await bcrypt.hash(
+      password,
+      10
+    );
 
     await addDoc(
       collection(db, "rooms"),
@@ -102,9 +94,7 @@ export default function CreatePage() {
           placeholder="パスワード"
           value={password}
           onChange={(e) =>
-            setPassword(
-              e.target.value
-            )
+            setPassword(e.target.value)
           }
           style={{
             width: "100%",
