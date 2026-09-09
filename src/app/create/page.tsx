@@ -1,34 +1,55 @@
 "use client";
 
 import { useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+
+import {
+  addDoc,
+  collection,
+} from "firebase/firestore";
+
 import { db } from "../../firebase/config";
+
 import bcrypt from "bcryptjs";
 
 export default function CreatePage() {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] =
+    useState("");
 
   const createRoom = async () => {
-    if (!name || !room || !password) {
-      alert("全て入力してください");
+    if (
+      !name ||
+      !room ||
+      !password
+    ) {
+      alert(
+        "すべて入力してください"
+      );
       return;
     }
 
-    const passwordHash = await bcrypt.hash(
-      password,
-      10
+    const passwordHash =
+      await bcrypt.hash(
+        password,
+        10
+      );
+
+    await addDoc(
+      collection(db, "rooms"),
+      {
+        owner: name,
+        roomName: room,
+        passwordHash,
+        createdAt: Date.now(),
+      }
     );
 
-    await addDoc(collection(db, "rooms"), {
-      owner: name,
-      roomName: room,
-      passwordHash,
-      createdAt: Date.now(),
-    });
-
     alert("部屋を作成しました");
+
+    setName("");
+    setRoom("");
+    setPassword("");
   };
 
   return (
@@ -58,8 +79,8 @@ export default function CreatePage() {
           }
           style={{
             width: "100%",
-            marginTop: "10px",
             padding: "10px",
+            marginTop: "10px",
           }}
         />
 
@@ -71,8 +92,8 @@ export default function CreatePage() {
           }
           style={{
             width: "100%",
-            marginTop: "10px",
             padding: "10px",
+            marginTop: "10px",
           }}
         />
 
@@ -81,12 +102,14 @@ export default function CreatePage() {
           placeholder="パスワード"
           value={password}
           onChange={(e) =>
-            setPassword(e.target.value)
+            setPassword(
+              e.target.value
+            )
           }
           style={{
             width: "100%",
-            marginTop: "10px",
             padding: "10px",
+            marginTop: "10px",
           }}
         />
 
@@ -94,11 +117,8 @@ export default function CreatePage() {
           onClick={createRoom}
           style={{
             width: "100%",
-            marginTop: "15px",
             padding: "10px",
-            background: "#2563eb",
-            color: "white",
-            border: "none",
+            marginTop: "10px",
           }}
         >
           作成
