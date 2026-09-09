@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import {
   doc,
-  getDoc
+  getDoc,
 } from "firebase/firestore";
+
 import { db } from "../../../firebase/config";
+
 import bcrypt from "bcryptjs";
 
 export default function JoinRoom({
@@ -56,7 +59,7 @@ export default function JoinRoom({
   return (
     <main
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -65,12 +68,12 @@ export default function JoinRoom({
       <div
         style={{
           width: "400px",
-          padding: "20px",
           background: "#1e293b",
+          padding: "20px",
           borderRadius: "12px",
         }}
       >
-        <h1>部屋へ入る</h1>
+        <h1>部屋へ入室</h1>
 
         <input
           type="password"
@@ -92,8 +95,8 @@ export default function JoinRoom({
           onClick={joinRoom}
           style={{
             width: "100%",
-            marginTop: "10px",
             padding: "10px",
+            marginTop: "10px",
           }}
         >
           入室
