@@ -8,6 +8,7 @@ import {
   onSnapshot,
   query,
   where,
+  orderBy,
 } from "firebase/firestore";
 
 import { db } from "../../../firebase/config";
@@ -22,7 +23,8 @@ export default function RoomPage() {
   useEffect(() => {
     const q = query(
       collection(db, "messages"),
-      where("roomId", "==", roomId)
+      where("roomId", "==", roomId),
+      orderBy("createdAt", "asc")
     );
 
     const unsub = onSnapshot(q, (snapshot) => {
@@ -38,7 +40,7 @@ export default function RoomPage() {
   }, []);
 
   const sendMessage = async () => {
-    if (!message) return;
+    if (!name || !message) return;
 
     await addDoc(collection(db, "messages"), {
       roomId,
@@ -84,12 +86,20 @@ export default function RoomPage() {
           <div
             key={msg.id}
             style={{
-              marginBottom: "10px",
+              marginBottom: "15px",
+              paddingBottom: "10px",
+              borderBottom: "1px solid #334155",
             }}
           >
             <b>{msg.user}</b>
 
             <div>{msg.text}</div>
+
+            <small style={{ color: "#94a3b8" }}>
+              {new Date(
+                msg.createdAt
+              ).toLocaleString("ja-JP")}
+            </small>
           </div>
         ))}
       </div>
