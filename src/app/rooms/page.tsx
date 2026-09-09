@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config";
 
 export default function RoomsPage() {
@@ -50,9 +47,7 @@ export default function RoomsPage() {
         >
           <h3>{room.roomName}</h3>
 
-          <p>
-            作成者: {room.owner}
-          </p>
+          <p>作成者: {room.owner}</p>
 
           {`/join/${room.id}`}
             <button
