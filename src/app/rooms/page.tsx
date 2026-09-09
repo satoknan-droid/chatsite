@@ -65,4 +65,6 @@ export default function RoomsPage() {
           </Link>
         </div>
       ))}
-    </main
+    </main>
+  );
+}
