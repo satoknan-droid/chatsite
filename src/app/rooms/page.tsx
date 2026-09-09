@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
 import {
   collection,
-  getDocs
+  getDocs,
 } from "firebase/firestore";
+
 import { db } from "../../firebase/config";
 
 export default function RoomsPage() {
@@ -31,7 +33,9 @@ export default function RoomsPage() {
   return (
     <main
       style={{
-        padding: "30px",
+        padding: "20px",
+        maxWidth: "900px",
+        margin: "0 auto",
       }}
     >
       <h1>部屋一覧</h1>
@@ -42,8 +46,8 @@ export default function RoomsPage() {
           style={{
             background: "#1e293b",
             padding: "15px",
-            marginTop: "10px",
             borderRadius: "10px",
+            marginTop: "10px",
           }}
         >
           <h3>{room.roomName}</h3>
@@ -52,8 +56,14 @@ export default function RoomsPage() {
             作成者: {room.owner}
           </p>
 
-          {`/room/${room.id}`}
-            入室
+          {`/join/${room.id}`}
+            <button
+              style={{
+                padding: "10px",
+              }}
+            >
+              入室
+            </button>
           </Link>
         </div>
       ))}
