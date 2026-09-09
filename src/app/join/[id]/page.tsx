@@ -2,14 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-import {
-  doc,
-  getDoc,
-} from "firebase/firestore";
-
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
-
 import bcrypt from "bcryptjs";
 
 export default function JoinRoom({
@@ -19,18 +13,12 @@ export default function JoinRoom({
 }) {
   const router = useRouter();
 
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
 
   const joinRoom = async () => {
-    const roomRef = doc(
-      db,
-      "rooms",
-      params.id
-    );
+    const roomRef = doc(db, "rooms", params.id);
 
-    const roomSnap =
-      await getDoc(roomRef);
+    const roomSnap = await getDoc(roomRef);
 
     if (!roomSnap.exists()) {
       alert("部屋がありません");
@@ -45,15 +33,11 @@ export default function JoinRoom({
     );
 
     if (!ok) {
-      alert(
-        "パスワードが違います"
-      );
+      alert("パスワードが違います");
       return;
     }
 
-    router.push(
-      `/room/${params.id}`
-    );
+    router.push(`/room/${params.id}`);
   };
 
   return (
@@ -79,11 +63,7 @@ export default function JoinRoom({
           type="password"
           placeholder="パスワード"
           value={password}
-          onChange={(e) =>
-            setPassword(
-              e.target.value
-            )
-          }
+          onChange={(e) => setPassword(e.target.value)}
           style={{
             width: "100%",
             padding: "10px",
