@@ -17,6 +17,7 @@ export default function RoomPage() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
+  const [lastSend, setLastSend] = useState(0);
 
   const roomId = "ROOM_ID";
 
@@ -42,11 +43,20 @@ export default function RoomPage() {
   const sendMessage = async () => {
     if (!name || !message) return;
 
+    const now = Date.now();
+
+    if (now - lastSend < 3000) {
+      alert("3秒待ってから送信してください");
+      return;
+    }
+
+    setLastSend(now);
+
     await addDoc(collection(db, "messages"), {
       roomId,
       user: name,
       text: message,
-      createdAt: Date.now(),
+      createdAt: now,
     });
 
     setMessage("");
@@ -95,7 +105,11 @@ export default function RoomPage() {
 
             <div>{msg.text}</div>
 
-            <small style={{ color: "#94a3b8" }}>
+            <small
+              style={{
+                color: "#94a3b8",
+              }}
+            >
               {new Date(
                 msg.createdAt
               ).toLocaleString("ja-JP")}
@@ -128,13 +142,4 @@ export default function RoomPage() {
           style={{
             padding: "10px 20px",
             background: "#2563eb",
-            color: "white",
-            border: "none",
-          }}
-        >
-          送信
-        </button>
-      </div>
-    </main>
-  );
-}
+            color: "white"
