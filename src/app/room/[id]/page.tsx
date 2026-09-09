@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { useParams } from "next/navigation";
+
 import {
   addDoc,
   collection,
@@ -19,7 +21,9 @@ export default function RoomPage() {
   const [messages, setMessages] = useState<any[]>([]);
   const [lastSend, setLastSend] = useState(0);
 
-  const roomId = "ROOM_ID";
+  const params = useParams();
+
+  const roomId = params.id as string;
 
   useEffect(() => {
     const q = query(
@@ -38,7 +42,7 @@ export default function RoomPage() {
     });
 
     return () => unsub();
-  }, []);
+  }, [roomId]);
 
   const sendMessage = async () => {
     if (!name || !message) return;
@@ -110,9 +114,9 @@ export default function RoomPage() {
                 color: "#94a3b8",
               }}
             >
-              {new Date(
-                msg.createdAt
-              ).toLocaleString("ja-JP")}
+              {new Date(msg.createdAt).toLocaleString(
+                "ja-JP"
+              )}
             </small>
           </div>
         ))}
@@ -142,4 +146,13 @@ export default function RoomPage() {
           style={{
             padding: "10px 20px",
             background: "#2563eb",
-            color: "white"
+            color: "white",
+            border: "none",
+          }}
+        >
+          送信
+        </button>
+      </div>
+    </main>
+  );
+}
