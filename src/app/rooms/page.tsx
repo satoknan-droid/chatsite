@@ -2,12 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 import {
   collection,
   getDocs,
 } from "firebase/firestore";
-
 import { db } from "../../firebase/config";
 
 export default function RoomsPage() {
@@ -67,6 +65,4 @@ export default function RoomsPage() {
           </Link>
         </div>
       ))}
-    </main>
-  );
-}
+    </main
